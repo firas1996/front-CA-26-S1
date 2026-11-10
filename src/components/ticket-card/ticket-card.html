@@ -1,3 +1,19 @@
-<div>
-    <p>ticket-card works!</p>
-</div>
+<article class="ticket" [class]="'priority-' + priority()">
+  <div class="top">
+    <span class="id">#{{ id() }}</span>
+    <span class="badge" [class]="'badge status-' + status()">{{ statusLabel() }}</span>
+  </div>
+
+  <h3 class="title">{{ title() }}</h3>
+  @if (description()) {
+    <p class="description">{{ description() }}</p>
+  }
+
+  <div class="footer">
+    <span class="priority">
+      <span class="dot"></span>
+      {{ priority() }} priority
+    </span>
+    <span class="meta">{{ assignee() }} · {{ date() }}</span>
+  </div>
+</article>

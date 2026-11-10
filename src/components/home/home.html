@@ -1,19 +1,42 @@
-<section>
-    <app-nav-bar />
-    <div id="content">
-        <div id="users">
-            <app-user-card />
-            <app-user-card />
-            <app-user-card />
-            <app-user-card />
+<section class="page">
+  <app-nav-bar />
+
+  <main class="content">
+    <aside class="panel users">
+      <div class="panel-header">
+        <h2>Team</h2>
+        <span class="count">{{ users.length }}</span>
+      </div>
+      <div class="users-list scroll">
+        @for (user of users; track user.name) {
+          <app-user-card [name]="user.name" [role]="user.role" [online]="user.online" />
+        }
+      </div>
+    </aside>
+
+    <section class="panel tickets">
+      <div class="panel-header">
+        <div>
+          <h2>Tickets</h2>
+          <p class="subtitle">{{ tickets.length }} tickets in this project</p>
         </div>
-        <div id="tickets">
-            <button class="button-63">Add Ticket</button>
-            <div id="tickets-l">
-                <app-ticket-card />
-                <app-ticket-card />
-                <app-ticket-card />
-            </div>
-        </div>
-    </div>
+        <button class="btn-primary" type="button">
+          <span class="plus">+</span> Add Ticket
+        </button>
+      </div>
+      <div class="tickets-list scroll">
+        @for (ticket of tickets; track ticket.id) {
+          <app-ticket-card
+            [id]="ticket.id"
+            [title]="ticket.title"
+            [description]="ticket.description"
+            [status]="ticket.status"
+            [priority]="ticket.priority"
+            [assignee]="ticket.assignee"
+            [date]="ticket.date"
+          />
+        }
+      </div>
+    </section>
+  </main>
 </section>
