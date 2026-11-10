@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user-card',
@@ -6,4 +6,9 @@ import { Component } from '@angular/core';
   templateUrl: './user-card.html',
   styleUrl: './user-card.css',
 })
-export class UserCard {}
+export class UserCard implements OnInit {
+  user = input.required<any>();
+  ngOnInit(): void {
+    console.log(this.user());
+  }
+}

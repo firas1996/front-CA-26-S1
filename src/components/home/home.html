@@ -7,10 +7,13 @@
         <h2>Team</h2>
       </div>
       <div class="users-list scroll">
+        @for(user of users(); track user._id){
+            <app-user-card [user]="user"/>
+        }
+        <!-- <app-user-card />
         <app-user-card />
         <app-user-card />
-        <app-user-card />
-        <app-user-card />
+        <app-user-card /> -->
       </div>
     </aside>
 
