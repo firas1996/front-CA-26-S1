@@ -1,19 +1,17 @@
-<article class="ticket" [class]="'priority-' + priority()">
+<article class="ticket priority-medium">
   <div class="top">
-    <span class="id">#{{ id() }}</span>
-    <span class="badge" [class]="'badge status-' + status()">{{ statusLabel() }}</span>
+    <span class="id">#101</span>
+    <span class="badge status-open">Open</span>
   </div>
 
-  <h3 class="title">{{ title() }}</h3>
-  @if (description()) {
-    <p class="description">{{ description() }}</p>
-  }
+  <h3 class="title">Ticket title</h3>
+  <p class="description">Short description of the ticket goes here.</p>
 
   <div class="footer">
     <span class="priority">
       <span class="dot"></span>
-      {{ priority() }} priority
+      Medium priority
     </span>
-    <span class="meta">{{ assignee() }} · {{ date() }}</span>
+    <span class="meta">Unassigned</span>
   </div>
 </article>
