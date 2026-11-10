@@ -1,0 +1,11 @@
+div{
+    background-color: yellow;
+    margin-top: 2dvh;
+    width: 90% ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    height: 7dvh;
+    border-radius: 8px;
+}
