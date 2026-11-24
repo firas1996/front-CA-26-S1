@@ -1,0 +1,37 @@
+<div class="backdrop"></div>
+<dialog open>
+    <h2>Add Ticket</h2>
+    <form>
+        <div>
+            <label for="title">Title</label>
+            <input name="title" id="title" type="text" />
+        </div>
+        <div>
+            <label for="description">Description</label>
+            <textarea name="description" id="description"></textarea>
+        </div>
+        <div>
+            <label for="due-date">Due Date</label>
+            <input type="date" id="due-date" name="due-date">
+        </div>
+        <div>
+            <label for="priority">Priority</label>
+            <select name="priority" id="priority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+        </div>
+        <div>
+            <label for="assignedTo">Assigned To</label>
+            <ng-multiselect-dropdown [placeholder]="'custom placeholder'" [settings]="dropdownSettings"
+                [data]="dropdownList" [(ngModel)]="selectedItems" (onSelect)="onItemSelect($event)"
+                (onSelectAll)="onSelectAll($event)">
+            </ng-multiselect-dropdown>
+        </div>
+        <div>
+            <button>Cancel</button>
+            <button>Create</button>
+        </div>
+    </form>
+</dialog>

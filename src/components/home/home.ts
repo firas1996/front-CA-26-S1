@@ -3,10 +3,11 @@ import { NavBar } from '../nav-bar/nav-bar';
 import { UserCard } from '../user-card/user-card';
 import { TicketCard } from '../ticket-card/ticket-card';
 import { Users } from '../../app/services/users';
+import { AddTicket } from '../add-ticket/add-ticket';
 
 @Component({
   selector: 'app-home',
-  imports: [NavBar, UserCard, TicketCard],
+  imports: [NavBar, UserCard, TicketCard, AddTicket],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
