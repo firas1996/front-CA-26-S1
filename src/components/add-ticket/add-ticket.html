@@ -1,37 +1,137 @@
-<div class="backdrop"></div>
-<dialog open>
-    <h2>Add Ticket</h2>
-    <form>
+@if (open()) {
+  <div
+    class="backdrop"
+    (click)="close()"
+    animate.enter="fade-in"
+    animate.leave="fade-out"
+  ></div>
+
+  <div class="stage">
+    <div
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="add-ticket-title"
+      animate.enter="rise-in"
+      animate.leave="rise-out"
+    >
+      <header class="header">
         <div>
+          <p class="eyebrow">New ticket</p>
+          <h2 id="add-ticket-title">Add ticket</h2>
+          <p class="hint">Capture the work, then assign it to the team.</p>
+        </div>
+        <button class="icon-btn" type="button" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </header>
+
+      <form (ngSubmit)="onSubmit()" novalidate>
+        <div class="body scroll">
+          <div class="field">
             <label for="title">Title</label>
-            <input name="title" id="title" type="text" />
-        </div>
-        <div>
+            <input
+              id="title"
+              name="title"
+              type="text"
+              placeholder="What needs to be done?"
+              autocomplete="off"
+              autofocus
+              [(ngModel)]="title"
+              [class.invalid]="attempted && !title.trim()"
+            />
+            @if (attempted && !title.trim()) {
+              <p class="error">Title is required.</p>
+            }
+          </div>
+
+          <div class="field">
             <label for="description">Description</label>
-            <textarea name="description" id="description"></textarea>
+            <textarea
+              id="description"
+              name="description"
+              rows="4"
+              placeholder="Add context, steps, or acceptance notes"
+              [(ngModel)]="description"
+            ></textarea>
+          </div>
+
+          <div class="split">
+            <div class="field">
+              <label for="due-date">Due date</label>
+              <input id="due-date" name="due-date" type="date" [(ngModel)]="dueDate" />
+            </div>
+
+            <div class="field">
+              <span id="priority-label">Priority</span>
+              <div class="priorities" role="radiogroup" aria-labelledby="priority-label">
+                @for (level of priorities; track level) {
+                  <button
+                    class="priority"
+                    type="button"
+                    role="radio"
+                    [attr.data-level]="level"
+                    [attr.aria-checked]="priority === level"
+                    [class.active]="priority === level"
+                    (click)="priority = level"
+                  >
+                    <span class="dot"></span>
+                    {{ level }}
+                  </button>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="assignee-search">Assigned to</label>
+            @if (selectedUsers().length) {
+              <div class="chips">
+                @for (user of selectedUsers(); track user._id) {
+                  <button class="chip" type="button" (click)="toggleUser(user)">
+                    <span class="avatar sm">{{ initials(user.name) }}</span>
+                    {{ user.name }}
+                    <span class="remove" aria-hidden="true">×</span>
+                  </button>
+                }
+              </div>
+            }
+            <input
+              id="assignee-search"
+              name="assignee-search"
+              type="search"
+              placeholder="Search teammates"
+              [(ngModel)]="assigneeQuery"
+            />
+            <div class="people scroll">
+              @for (user of filteredUsers(); track user._id) {
+                <button
+                  class="person"
+                  type="button"
+                  [class.selected]="isSelected(user)"
+                  (click)="toggleUser(user)"
+                >
+                  <span class="avatar sm">{{ initials(user.name) }}</span>
+                  <span class="person-copy">
+                    <span class="person-name">{{ user.name }}</span>
+                    <span class="person-role">{{ user.role }}</span>
+                  </span>
+                  <span class="mark" [class.on]="isSelected(user)"></span>
+                </button>
+              } @empty {
+                <p class="empty">
+                  {{ teammates().length ? 'No teammates match that search.' : 'No teammates to assign yet.' }}
+                </p>
+              }
+            </div>
+          </div>
         </div>
-        <div>
-            <label for="due-date">Due Date</label>
-            <input type="date" id="due-date" name="due-date">
-        </div>
-        <div>
-            <label for="priority">Priority</label>
-            <select name="priority" id="priority">
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-            </select>
-        </div>
-        <div>
-            <label for="assignedTo">Assigned To</label>
-            <ng-multiselect-dropdown [placeholder]="'custom placeholder'" [settings]="dropdownSettings"
-                [data]="dropdownList" [(ngModel)]="selectedItems" (onSelect)="onItemSelect($event)"
-                (onSelectAll)="onSelectAll($event)">
-            </ng-multiselect-dropdown>
-        </div>
-        <div>
-            <button>Cancel</button>
-            <button>Create</button>
-        </div>
-    </form>
-</dialog>
+
+        <footer class="footer">
+          <button class="btn-ghost" type="button" (click)="close()">Cancel</button>
+          <button class="btn-primary" type="submit">Create ticket</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+}

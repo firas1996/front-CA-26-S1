@@ -1,6 +1,10 @@
 <section class="page">
   <app-nav-bar />
-<app-add-ticket/>
+  <app-add-ticket
+    [open]="addOpen()"
+    [users]="users() ?? []"
+    (closed)="addOpen.set(false)"
+  />
   <main class="content">
     <aside class="panel users">
       <div class="panel-header">
@@ -20,7 +24,7 @@
     <section class="panel tickets">
       <div class="panel-header">
         <h2>Tickets</h2>
-        <button class="btn-primary" type="button">
+        <button class="btn-primary" type="button" (click)="addOpen.set(true)">
           <span class="plus">+</span> Add Ticket
         </button>
       </div>

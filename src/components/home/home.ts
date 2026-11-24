@@ -1,4 +1,4 @@
-import { Component, inject, Inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { NavBar } from '../nav-bar/nav-bar';
 import { UserCard } from '../user-card/user-card';
 import { TicketCard } from '../ticket-card/ticket-card';
@@ -14,6 +14,7 @@ import { AddTicket } from '../add-ticket/add-ticket';
 export class Home implements OnInit {
   private userService = inject(Users);
   users = signal<any | null>(null);
+  addOpen = signal(false);
 
   ngOnInit(): void {
     this.userService.getusers().subscribe({
